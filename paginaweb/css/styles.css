@@ -1,18 +1,19 @@
 :root {
-  /* NUEVA PALETA PROFESIONAL MAQUINARIA: Plata/Azul Auto + Gris Industrial + Amarillo Maquinaria */
-  --primary: #1e3a8a;        /* Azul automotriz profesional */
-  --secondary: #0f172a;      /* Gris oscuro industrial */
-  --dark: #020617;           /* Negro carbón profundo */
-  --dark2: #0f0f23;          /* Azul negro maquinaria */
-  --dark3: #1e1b4b;          /* Violeta industrial oscuro */
-  --light: #f1f5f9;          /* Gris plata claro */
-  --text: #ffffff;           /* Blanco puro */
-  --text-dim: #94a3b8;       /* Gris medio legible */
-  --accent: #f59e0b;         /* Amarillo maquinaria/seguridad */
-  --success: #10b981;        /* Verde éxito */
-  --danger: #ef4444;        /* Rojo error */
+  /* PALETA THERMO-MOTORS: Azul Climatización + Rojo Motor + Gunmetal */
+  --primary: #0ea5e9;        /* Azul Cerúleo (Climatización, fluidos y profesionalidad) */
+  --primary-hover: #0284c7;  /* Azul más profundo para interacciones */
+  --secondary: #334155;      /* Gris Pizarra (Metal y herramientas) */
+  --dark: #0b1120;           /* Azul Noche Profundo (Elegante y moderno para el fondo) */
+  --dark2: #111827;          /* Gris Bloque de Motor (Fondos secundarios) */
+  --dark3: #1f2937;          /* Gunmetal (Gris metalizado para tarjetas) */
+  --light: #f8fafc;          /* Blanco hielo */
+  --text: #f1f5f9;           /* Blanco puro y limpio */
+  --text-dim: #94a3b8;       /* Gris acero para textos secundarios legibles */
+  --accent: #e11d48;         /* Rojo Racing (Calor, motores, alto rendimiento) */
+  --success: #10b981;        /* Verde sistema ok */
+  --danger: #ef4444;         /* Rojo alerta/falla */
+  --ice: #38bdf8;            /* Azul escarcha (Detalles fríos y brillantes) */
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }

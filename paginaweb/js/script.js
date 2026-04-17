@@ -41,7 +41,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 
-document.querySelectorAll('.serv-card, .nos-card, .gal-item, .contact-row, .contact-form').forEach((el, i) => {
+document.querySelectorAll('.serv-card, .nos-card, .gal-item').forEach((el, i) => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(24px)';
   el.style.transition = `opacity .55s ${i * 0.07}s ease, transform .55s ${i * 0.07}s ease`;
