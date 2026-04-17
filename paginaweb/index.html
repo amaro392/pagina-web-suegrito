@@ -282,7 +282,7 @@ Especialistas en diagnóstico, reparación y mantención de aire acondicionado p
     <div class="contact-info">
 
       <div class="contact-row">
-        <img src="assets/telefono.jpg" alt="Maquinaria pesada" class="card-thumb">
+        <img src="assets/telefono.jpg" alt="Teléfono" class="card-thumb">
         <div>
           <h4>Teléfono</h4>
           <p><a href="tel:+56956672657">+56 9 5667 2657</a></p>
@@ -290,20 +290,12 @@ Especialistas en diagnóstico, reparación y mantención de aire acondicionado p
       </div>
 
       <a href="https://wa.me/56956672657?text=Hola,%20quiero%20consultar%20por%20el%20servicio%20de%20aire%20acondicionado" class="wa-cta" target="_blank" rel="noopener">
-        <img src="assets/whatsapp.jpg" alt="Maquinaria pesada" class="card-thumb">
+        <img src="assets/whatsapp.jpg" alt="WhatsApp" class="card-thumb">
         Escríbenos por WhatsApp
       </a>
 
       <div class="contact-row">
-        <img src="assets/correo.jpg" alt="Maquinaria pesada" class="card-thumb">
-        <div>
-          <h4>Correo electrónico</h4>
-          <p><a href="mailto:cvasquez77_88@yahoo.com">cvasquez77_88@yahoo.com</a></p>
-        </div>
-      </div>
-
-      <div class="contact-row">
-        <img src="assets/facebook.jpg" alt="Maquinaria pesada" class="card-thumb">
+        <img src="assets/facebook.jpg" alt="Facebook" class="card-thumb">
         <div>
           <h4>Facebook</h4>
           <p>Búscanos en Facebook como <strong>Cristian Andres Vasquez Vasquez</strong></p>
@@ -311,30 +303,42 @@ Especialistas en diagnóstico, reparación y mantención de aire acondicionado p
       </div>
 
       <div class="contact-row">
-        <img src="assets/reloj.jpg" alt="Maquinaria pesada" class="card-thumb">
+        <img src="assets/reloj.jpg" alt="Horario" class="card-thumb">
         <div>
           <h4>Horario de atención</h4>
           <p>Lunes a Sábado<br>09:00 – 18:00 hrs</p>
         </div>
       </div>
 
-    </div>
+      <!-- Formulario de Contacto -->
+      <form id="contactForm" class="contact-form">
+        <h4>📧 Envíanos un mensaje</h4>
+        <div class="form-group">
+          <input type="text" id="user_name" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="user_email" placeholder="Tu email" required>
+        </div>
+        <div class="form-group">
+          <input type="text" id="user_subject" placeholder="Asunto">
+        </div>
+        <div class="form-group">
+          <textarea id="user_message" placeholder="Tu mensaje..." rows="4" required></textarea>
+        </div>
+        <button type="submit" class="form-btn">Enviar Mensaje</button>
+        <div id="form-message" class="form-message"></div>
+      </form>
 
-    <div>
-      <div class="contact-map">
-         <img src="assets/ubicacion.jpg" alt="Maquinaria pesada" class="card-thumb">
-        <p class="map-loc">Los Ángeles, Chile</p>
-        <p class="map-sub">Región del Biobío</p>
-        <a href="https://maps.google.com/?q=Los+Angeles+Chile" target="_blank" rel="noopener" class="map-btn">Ver en Google Maps</a>
-      </div>
+      <img src="assets/correo.jpg" alt="Email" class="contact-icon-large">
+
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+
 <footer>
   <div class="footer-logo">cristianaire<span>.</span>CL</div>
-  <p class="footer-copy">© 2026  cristianaire – Los Ángeles, Chile</p>
+  <p class="footer-copy">© 2026 cristianaire – Los Ángeles, Chile</p>
   <div class="footer-links">
     <a href="#inicio">Inicio</a>
     <a href="#servicios">Servicios</a>
@@ -342,6 +346,7 @@ Especialistas en diagnóstico, reparación y mantención de aire acondicionado p
   </div>
 </footer>
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>
