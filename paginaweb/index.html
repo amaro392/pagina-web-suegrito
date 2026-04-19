@@ -363,6 +363,7 @@
         <div class="form-group">
           <input type="email" id="user_email" placeholder="Tu email" required aria-label="Tu email" class="form-input">
           <span class="form-error" id="error-email"></span>
+          <span class="form-valid-icon" id="valid-email" style="display:none;">✓</span>
         </div>
         <div class="form-group">
           <input type="text" id="user_subject" placeholder="Asunto" aria-label="Asunto del mensaje" class="form-input">
@@ -371,8 +372,14 @@
           <textarea id="user_message" placeholder="Tu mensaje..." rows="4" required aria-label="Tu mensaje" class="form-textarea"></textarea>
           <span class="form-error" id="error-message"></span>
         </div>
-        <button type="submit" class="form-btn" id="submitBtn">Enviar Mensaje</button>
+
+        <!-- Honeypot (campo oculto para evitar bots) -->
+        <input type="text" id="website" name="website" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button type="submit" class="form-btn" id="submitBtn" disabled>Enviar Mensaje</button>
+        <small class="form-hint">Completa el formulario correctamente para enviar</small>
         <div id="form-message" class="form-message"></div>
+        <div id="form-status" class="form-status"></div>
       </form>
 
       <img src="assets/correo.jpg" alt="Icono correo" loading="lazy" class="contact-icon-large">

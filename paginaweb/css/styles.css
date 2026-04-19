@@ -820,11 +820,33 @@ h2 span { color: var(--primary); }
   font-family: 'Barlow', sans-serif;
 }
 
+/* Indicador de validación (checkmark) */
+.form-valid-icon {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  color: var(--success);
+  font-weight: bold;
+  font-size: 1.2rem;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { transform: scale(0) rotate(-90deg); opacity: 0; }
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
 .form-error {
   font-size: 0.85rem;
   color: var(--danger);
   display: none;
   margin-top: -0.25rem;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .form-error.show {
@@ -837,6 +859,9 @@ h2 span { color: var(--primary); }
   background: rgba(239, 68, 68, 0.03);
 }
 
+/* Contenedor de Google reCAPTCHA - REMOVIDO */
+
+/* Botón de envío mejorado */
 .form-btn {
   background: var(--accent);
   color: white;
@@ -851,32 +876,121 @@ h2 span { color: var(--primary); }
   cursor: pointer;
   transition: all 0.3s ease;
   align-self: flex-start;
+  position: relative;
+  overflow: hidden;
 }
 
-.form-btn:hover {
+.form-btn:hover:not(:disabled) {
   background: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
 }
 
+.form-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Botón DESABILITADO - estilos mejorados */
 .form-btn:disabled {
   background: #9ca3af;
   cursor: not-allowed;
   transform: none;
-  opacity: 0.6;
+  opacity: 0.65;
+  box-shadow: none;
 }
 
+.form-btn:disabled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Pista de ayuda del formulario */
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-top: -1rem;
+}
+
+/* Mensajes del formulario */
 .form-message {
   margin-top: 0.5rem;
   min-height: 20px;
   font-size: 0.9rem;
-  padding: 0.75rem;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
   display: none;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .form-message.show {
   display: block;
+}
+
+.form-message.success {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+  border-left: 3px solid var(--success);
+}
+
+.form-message.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border-left: 3px solid var(--danger);
+}
+
+/* Estado del formulario (enviando, éxito, error) */
+.form-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  display: none;
+  animation: slideUp 0.3s ease;
+}
+
+.form-status.show {
+  display: block;
+}
+
+.status-sending {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.status-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 .form-message.success {

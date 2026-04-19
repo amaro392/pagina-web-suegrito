@@ -36,6 +36,9 @@ function updateThemeToggleButton(theme) {
 }
 
 // ========== FORM VALIDATION ==========
+// Regex robusta para validar emails
+const ROBUST_EMAIL_REGEX = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 function initFormValidation() {
   const form = document.getElementById('contactForm');
   if (!form) return;
@@ -43,22 +46,63 @@ function initFormValidation() {
   const nameInput = document.getElementById('user_name');
   const emailInput = document.getElementById('user_email');
   const messageInput = document.getElementById('user_message');
+  const submitBtn = document.getElementById('submitBtn');
   
-  // Validación en tiempo real
-  nameInput?.addEventListener('blur', () => validateField(nameInput, 'name'));
-  emailInput?.addEventListener('blur', () => validateField(emailInput, 'email'));
-  messageInput?.addEventListener('blur', () => validateField(messageInput, 'message'));
+  // Validación en tiempo real con actualización del botón
+  nameInput?.addEventListener('blur', () => {
+    validateField(nameInput, 'name');
+    updateSubmitButton();
+  });
+  
+  emailInput?.addEventListener('blur', () => {
+    validateField(emailInput, 'email');
+    updateSubmitButton();
+  });
+  
+  emailInput?.addEventListener('input', () => {
+    validateField(emailInput, 'email');
+    updateSubmitButton();
+  });
+  
+  messageInput?.addEventListener('blur', () => {
+    validateField(messageInput, 'message');
+    updateSubmitButton();
+  });
   
   // Limpiar error al escribir
   [nameInput, emailInput, messageInput].forEach(input => {
     input?.addEventListener('input', () => {
       if (input.classList.contains('error')) {
         clearFieldError(input);
+        updateSubmitButton();
       }
     });
   });
   
   form.addEventListener('submit', handleFormSubmit);
+  
+  // Validación inicial
+  updateSubmitButton();
+}
+
+// Actualizar estado del botón basado en validación
+function updateSubmitButton() {
+  const submitBtn = document.getElementById('submitBtn');
+  const nameInput = document.getElementById('user_name');
+  const emailInput = document.getElementById('user_email');
+  const messageInput = document.getElementById('user_message');
+  
+  const nameValid = nameInput?.value.trim().length >= 3;
+  const emailValid = ROBUST_EMAIL_REGEX.test(emailInput?.value.trim() || '');
+  const messageValid = messageInput?.value.trim().length >= 10;
+  
+  submitBtn.disabled = !(nameValid && emailValid && messageValid);
+  
+  // Mostrar indicador visual de validación de email
+  const validIcon = document.getElementById('valid-email');
+  if (validIcon) {
+    validIcon.style.display = emailValid ? 'inline' : 'none';
+  }
 }
 
 function validateField(input, type) {
@@ -69,9 +113,8 @@ function validateField(input, type) {
     isValid = input.value.trim().length >= 3;
     errorMsg = isValid ? '' : 'El nombre debe tener al menos 3 caracteres';
   } else if (type === 'email') {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    isValid = emailRegex.test(input.value.trim());
-    errorMsg = isValid ? '' : 'Ingresa un email válido';
+    isValid = ROBUST_EMAIL_REGEX.test(input.value.trim());
+    errorMsg = isValid ? '' : 'Por favor, ingresa un email válido (ej: usuario@ejemplo.com)';
   } else if (type === 'message') {
     isValid = input.value.trim().length >= 10;
     errorMsg = isValid ? '' : 'El mensaje debe tener al menos 10 caracteres';
@@ -108,54 +151,73 @@ function clearFieldError(input) {
 async function handleFormSubmit(e) {
   e.preventDefault();
   
+  const form = document.getElementById('contactForm');
   const nameInput = document.getElementById('user_name');
   const emailInput = document.getElementById('user_email');
   const messageInput = document.getElementById('user_message');
   const submitBtn = document.getElementById('submitBtn');
   const formMessage = document.getElementById('form-message');
+  const formStatus = document.getElementById('form-status');
+  const honeypotInput = document.getElementById('website');
   
-  // Validar todos los campos
+  // ========== HONEYPOT CHECK (Anti-bot) ==========
+  if (honeypotInput.value.trim() !== '') {
+    console.warn('⚠️ Honeypot detectado - probable bot');
+    showFormMessage('❌ Validación fallida. Intenta nuevamente.', 'error');
+    return;
+  }
+  
+  // ========== VALIDAR TODOS LOS CAMPOS ==========
   const nameValid = validateField(nameInput, 'name');
   const emailValid = validateField(emailInput, 'email');
   const messageValid = validateField(messageInput, 'message');
   
   if (!nameValid || !emailValid || !messageValid) {
-    showFormMessage('Por favor, completa todos los campos correctamente.', 'error');
+    showFormMessage('⚠️ Por favor, completa todos los campos correctamente.', 'error');
     return;
   }
   
-  // Mostrar loading
+  // ========== MOSTRAR ESTADO: ENVIANDO ==========
   const originalText = submitBtn.textContent;
-  submitBtn.textContent = 'Enviando...';
+  submitBtn.textContent = '⏳ Enviando...';
   submitBtn.disabled = true;
   formMessage.innerHTML = '';
+  if (formStatus) formStatus.innerHTML = '<span class="status-sending">📤 Enviando tu mensaje...</span>';
   
   try {
     const templateParams = {
-      from_name: nameInput.value,
-      from_email: emailInput.value,
-      subject: document.getElementById('user_subject').value || 'Consulta general',
-      message: messageInput.value,
-      to_email: 'cvasquez77_88@yahoo.com'
+      from_name: nameInput.value.trim(),
+      from_email: emailInput.value.trim(),
+      subject: document.getElementById('user_subject').value.trim() || 'Consulta general',
+      message: messageInput.value.trim(),
+      to_email: 'francisco221068009@gmail.com'
     };
     
+    // ========== ENVIAR CON EMAILJS ==========
     const response = await emailjs.send(
-      'service_q5c1p9h',      // Reemplaza con tu Service ID
-      'template_8bq98ze',     // Reemplaza con tu Template ID
+      'service_293czrs',      // Service ID
+      'template_gxfmh36',     // Template ID
       templateParams
     );
     
+    // ========== ÉXITO ==========
     showFormMessage('✅ ¡Mensaje enviado correctamente! Te responderemos pronto.', 'success');
+    if (formStatus) formStatus.innerHTML = '<span class="status-success">✓ Mensaje enviado con éxito</span>';
     form.reset();
+    updateSubmitButton();
     
   } catch (error) {
-    console.error('Error al enviar:', error);
-    showFormMessage('❌ Error al enviar. Intenta nuevamente o usa WhatsApp.', 'error');
+    console.error('❌ Error al enviar:', error);
+    showFormMessage('❌ Error al enviar. Por favor, intenta nuevamente o contacta por WhatsApp.', 'error');
+    if (formStatus) formStatus.innerHTML = '<span class="status-error">✗ Error en el envío</span>';
+  } finally {
+    // ========== RESTAURAR BOTÓN DESPUÉS DE 3 SEGUNDOS ==========
+    setTimeout(() => {
+      submitBtn.textContent = originalText;
+      updateSubmitButton();
+      if (formStatus) formStatus.innerHTML = '';
+    }, 3000);
   }
-  
-  // Restaurar botón
-  submitBtn.textContent = originalText;
-  submitBtn.disabled = false;
 }
 
 function showFormMessage(message, type) {
@@ -244,6 +306,9 @@ document.querySelectorAll('.serv-card, .nos-card, .gal-item, .testimonial-card')
 
 // ========== INIT ON DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
+  // Inicializar EmailJS
+  emailjs.init('AAyEVtsT4xjc0yOXM');
+  
   initThemeToggle();
   initFormValidation();
 });
