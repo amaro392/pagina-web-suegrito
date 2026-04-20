@@ -186,17 +186,16 @@ async function handleFormSubmit(e) {
   
   try {
     const templateParams = {
-      from_name: nameInput.value.trim(),
-      from_email: emailInput.value.trim(),
-      subject: document.getElementById('user_subject').value.trim() || 'Consulta general',
+      name: nameInput.value.trim(),
+      email: emailInput.value.trim(),
       message: messageInput.value.trim(),
-      to_email: 'francisco221068009@gmail.com'
+      to_email: 'cvasquez7788@gmail.com'
     };
     
     // ========== ENVIAR CON EMAILJS ==========
     const response = await emailjs.send(
-      'service_293czrs',      // Service ID
-      'template_gxfmh36',     // Template ID
+      'service_58qz1rg',      // Service ID
+      'template_wjk6hco',     // Template ID
       templateParams
     );
     
@@ -307,7 +306,7 @@ document.querySelectorAll('.serv-card, .nos-card, .gal-item, .testimonial-card')
 // ========== INIT ON DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
   // Inicializar EmailJS
-  emailjs.init('AAyEVtsT4xjc0yOXM');
+  emailjs.init('2yQjw2XUrKsFdc4V3');
   
   initThemeToggle();
   initFormValidation();
