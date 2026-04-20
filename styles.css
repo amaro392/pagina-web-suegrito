@@ -80,7 +80,7 @@ nav {
 }
 
 .nav-logo-img {
-  height: 2.2rem;
+  height: 1.8rem;
   width: auto;
   flex-shrink: 0;
   border-radius: 4px;
@@ -1214,7 +1214,7 @@ footer {
 /* Tablets medianas */
 @media (max-width: 768px) {
   .nav-logo-img {
-    height: 1.8rem;
+    height: 1.5rem;
   }
   
   nav {
