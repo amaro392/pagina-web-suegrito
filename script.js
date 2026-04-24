@@ -96,7 +96,23 @@ function updateSubmitButton() {
   const emailValid = ROBUST_EMAIL_REGEX.test(emailInput?.value.trim() || '');
   const messageValid = messageInput?.value.trim().length >= 10;
   
-  submitBtn.disabled = !(nameValid && emailValid && messageValid);
+  const isFormValid = nameValid && emailValid && messageValid;
+  submitBtn.disabled = !isFormValid;
+  
+  // Actualizar titulo e aria-label con mensajes dinámicos
+  if (!isFormValid) {
+    const missingFields = [];
+    if (!nameValid) missingFields.push('nombre (mín. 3 caracteres)');
+    if (!emailValid) missingFields.push('email válido');
+    if (!messageValid) missingFields.push('mensaje (mín. 10 caracteres)');
+    
+    const tooltip = `Por favor, completa: ${missingFields.join(', ')}`;
+    submitBtn.title = tooltip;
+    submitBtn.setAttribute('aria-label', `Botón enviar deshabilitado - ${tooltip}`);
+  } else {
+    submitBtn.title = '✓ Todos los campos completos - Haz clic para enviar';
+    submitBtn.setAttribute('aria-label', 'Botón enviar mensaje - Todos los campos están completos');
+  }
   
   // Mostrar indicador visual de validación de email
   const validIcon = document.getElementById('valid-email');
@@ -303,6 +319,37 @@ document.querySelectorAll('.serv-card, .nos-card, .gal-item, .testimonial-card')
   observer.observe(el);
 });
 
+// ========== SMART STICKY HEADER (Oculta al hacer scroll hacia abajo) ==========
+function initSmartStickyHeader() {
+  const nav = document.querySelector('nav');
+  let lastScrollTop = 0;
+  let isNavVisible = true;
+  const scrollThreshold = 30; // Solo oculta después de 30px de scroll
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    
+    // Si scrollea hacia abajo
+    if (currentScroll > lastScrollTop && currentScroll > scrollThreshold) {
+      if (isNavVisible) {
+        nav.style.transform = 'translateY(-100%)';
+        nav.style.transition = 'transform 0.3s ease-in-out';
+        isNavVisible = false;
+      }
+    }
+    // Si scrollea hacia arriba
+    else if (currentScroll < lastScrollTop) {
+      if (!isNavVisible) {
+        nav.style.transform = 'translateY(0)';
+        nav.style.transition = 'transform 0.3s ease-in-out';
+        isNavVisible = true;
+      }
+    }
+    
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }, false);
+}
+
 // ========== INIT ON DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
   // Inicializar EmailJS
@@ -310,4 +357,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
   initThemeToggle();
   initFormValidation();
+  initSmartStickyHeader();
 });
