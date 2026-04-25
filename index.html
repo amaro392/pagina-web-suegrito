@@ -319,20 +319,21 @@
       <!-- Formulario de Contacto -->
       <form id="contactForm" class="contact-form" novalidate>
         <h4>📧 Envíanos un mensaje</h4>
+        <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">Completa los campos y nos contactaremos pronto</p>
         <div class="form-group">
-          <input type="text" id="user_name" placeholder="Tu nombre" required aria-label="Tu nombre" class="form-input">
+          <input type="text" id="user_name" placeholder="Tu nombre (ej: Francisco)" required aria-label="Tu nombre" class="form-input">
           <span class="form-error" id="error-name"></span>
         </div>
         <div class="form-group">
-          <input type="email" id="user_email" placeholder="Tu email" required aria-label="Tu email" class="form-input">
+          <input type="email" id="user_email" placeholder="Tu correo (ej: juan@gmail.com)" required aria-label="Tu email" class="form-input">
           <span class="form-error" id="error-email"></span>
           <span class="form-valid-icon" id="valid-email" style="display:none;">✓</span>
         </div>
         <div class="form-group">
-          <input type="text" id="user_subject" placeholder="Asunto" aria-label="Asunto del mensaje" class="form-input">
+          <input type="text" id="user_subject" placeholder="Asunto (ej: Consulta AC)" aria-label="Asunto del mensaje" class="form-input">
         </div>
         <div class="form-group">
-          <textarea id="user_message" placeholder="Tu mensaje..." rows="4" required aria-label="Tu mensaje" class="form-textarea"></textarea>
+          <textarea id="user_message" placeholder="Tu mensaje (mínimo 5 caracteres)" rows="4" required aria-label="Tu mensaje" class="form-textarea"></textarea>
           <span class="form-error" id="error-message"></span>
         </div>
 
@@ -340,7 +341,7 @@
         <input type="text" id="website" name="website" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <button type="submit" class="form-btn" id="submitBtn" disabled title="Por favor, completa todos los campos para habilitar el envío" aria-label="Botón enviar mensaje - Por favor, completa todos los campos requeridos">Enviar Mensaje</button>
-        <small class="form-hint">Completa el formulario correctamente para enviar</small>
+        <small class="form-hint">Todos los campos requeridos</small>
         <div id="form-message" class="form-message"></div>
         <div id="form-status" class="form-status"></div>
       </form>
@@ -399,6 +400,6 @@
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="js/script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

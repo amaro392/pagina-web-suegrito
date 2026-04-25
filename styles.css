@@ -770,15 +770,6 @@ h2 span { color: var(--primary); }
   gap: 0.6rem;
 }
 
-/* Ocultar formulario genérico para priorizar WhatsApp */
-.contact-form {
-  display: none !important;
-}
-
-.contact-form ~ .contact-icon-large {
-  display: none !important;
-}
-
 /* Reducir tamaño de miniaturas en contacto */
 .contact-row .card-thumb {
   width: 50px;

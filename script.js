@@ -10,6 +10,8 @@ function initThemeToggle() {
   htmlElement.setAttribute('data-theme', savedTheme);
   updateThemeToggleButton(savedTheme);
   
+  if (!themeToggle) return;
+  
   themeToggle.addEventListener('click', () => {
     const currentTheme = htmlElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -31,137 +33,71 @@ function initThemeToggle() {
 
 function updateThemeToggleButton(theme) {
   const button = document.getElementById('theme-toggle');
+  if (!button) return;
   button.textContent = theme === 'dark' ? '☀️' : '🌙';
   button.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
 }
 
 // ========== FORM VALIDATION ==========
 // Regex robusta para validar emails
-const ROBUST_EMAIL_REGEX = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const ROBUST_EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function initFormValidation() {
   const form = document.getElementById('contactForm');
-  if (!form) return;
+  if (!form) {
+    console.error('Formulario no encontrado');
+    return;
+  }
   
   const nameInput = document.getElementById('user_name');
   const emailInput = document.getElementById('user_email');
   const messageInput = document.getElementById('user_message');
   const submitBtn = document.getElementById('submitBtn');
   
-  // Validación en tiempo real con actualización del botón
-  nameInput?.addEventListener('blur', () => {
-    validateField(nameInput, 'name');
-    updateSubmitButton();
-  });
+  console.log('Formulario inicializado', { form, nameInput, emailInput, messageInput, submitBtn });
   
-  emailInput?.addEventListener('blur', () => {
-    validateField(emailInput, 'email');
-    updateSubmitButton();
-  });
+  // Función para verificar si todo es válido
+  function checkFormValidity() {
+    const name = (nameInput?.value || '').trim();
+    const email = (emailInput?.value || '').trim();
+    const message = (messageInput?.value || '').trim();
+    
+    const nameOk = name.length >= 3;
+    const emailOk = ROBUST_EMAIL_REGEX.test(email);
+    const messageOk = message.length >= 5;
+    
+    console.log('Validación:', { nameOk, emailOk, messageOk, name, email, message });
+    
+    const isValid = nameOk && emailOk && messageOk;
+    submitBtn.disabled = !isValid;
+    
+    // Cambiar color del botón
+    if (isValid) {
+      submitBtn.style.opacity = '1';
+      submitBtn.style.cursor = 'pointer';
+    } else {
+      submitBtn.style.opacity = '0.65';
+      submitBtn.style.cursor = 'not-allowed';
+    }
+    
+    return isValid;
+  }
   
-  emailInput?.addEventListener('input', () => {
-    validateField(emailInput, 'email');
-    updateSubmitButton();
-  });
+  // Eventos para validar mientras escribe
+  nameInput?.addEventListener('input', checkFormValidity);
+  nameInput?.addEventListener('change', checkFormValidity);
   
-  messageInput?.addEventListener('blur', () => {
-    validateField(messageInput, 'message');
-    updateSubmitButton();
-  });
+  emailInput?.addEventListener('input', checkFormValidity);
+  emailInput?.addEventListener('change', checkFormValidity);
   
-  // Limpiar error al escribir
-  [nameInput, emailInput, messageInput].forEach(input => {
-    input?.addEventListener('input', () => {
-      if (input.classList.contains('error')) {
-        clearFieldError(input);
-        updateSubmitButton();
-      }
-    });
-  });
+  messageInput?.addEventListener('input', checkFormValidity);
+  messageInput?.addEventListener('change', checkFormValidity);
   
+  // Envío del formulario
   form.addEventListener('submit', handleFormSubmit);
   
   // Validación inicial
-  updateSubmitButton();
-}
-
-// Actualizar estado del botón basado en validación
-function updateSubmitButton() {
-  const submitBtn = document.getElementById('submitBtn');
-  const nameInput = document.getElementById('user_name');
-  const emailInput = document.getElementById('user_email');
-  const messageInput = document.getElementById('user_message');
-  
-  const nameValid = nameInput?.value.trim().length >= 3;
-  const emailValid = ROBUST_EMAIL_REGEX.test(emailInput?.value.trim() || '');
-  const messageValid = messageInput?.value.trim().length >= 10;
-  
-  const isFormValid = nameValid && emailValid && messageValid;
-  submitBtn.disabled = !isFormValid;
-  
-  // Actualizar titulo e aria-label con mensajes dinámicos
-  if (!isFormValid) {
-    const missingFields = [];
-    if (!nameValid) missingFields.push('nombre (mín. 3 caracteres)');
-    if (!emailValid) missingFields.push('email válido');
-    if (!messageValid) missingFields.push('mensaje (mín. 10 caracteres)');
-    
-    const tooltip = `Por favor, completa: ${missingFields.join(', ')}`;
-    submitBtn.title = tooltip;
-    submitBtn.setAttribute('aria-label', `Botón enviar deshabilitado - ${tooltip}`);
-  } else {
-    submitBtn.title = '✓ Todos los campos completos - Haz clic para enviar';
-    submitBtn.setAttribute('aria-label', 'Botón enviar mensaje - Todos los campos están completos');
-  }
-  
-  // Mostrar indicador visual de validación de email
-  const validIcon = document.getElementById('valid-email');
-  if (validIcon) {
-    validIcon.style.display = emailValid ? 'inline' : 'none';
-  }
-}
-
-function validateField(input, type) {
-  let isValid = false;
-  let errorMsg = '';
-  
-  if (type === 'name') {
-    isValid = input.value.trim().length >= 3;
-    errorMsg = isValid ? '' : 'El nombre debe tener al menos 3 caracteres';
-  } else if (type === 'email') {
-    isValid = ROBUST_EMAIL_REGEX.test(input.value.trim());
-    errorMsg = isValid ? '' : 'Por favor, ingresa un email válido (ej: usuario@ejemplo.com)';
-  } else if (type === 'message') {
-    isValid = input.value.trim().length >= 10;
-    errorMsg = isValid ? '' : 'El mensaje debe tener al menos 10 caracteres';
-  }
-  
-  if (!isValid) {
-    showFieldError(input, errorMsg);
-  } else {
-    clearFieldError(input);
-  }
-  
-  return isValid;
-}
-
-function showFieldError(input, message) {
-  input.classList.add('error');
-  const errorSpan = document.getElementById(`error-${input.id.split('_')[1]}`);
-  if (errorSpan) {
-    errorSpan.textContent = message;
-    errorSpan.classList.add('show');
-  }
-}
-
-function clearFieldError(input) {
-  input.classList.remove('error');
-  const fieldName = input.id.split('_')[1];
-  const errorSpan = document.getElementById(`error-${fieldName}`);
-  if (errorSpan) {
-    errorSpan.classList.remove('show');
-    errorSpan.textContent = '';
-  }
+  checkFormValidity();
 }
 
 async function handleFormSubmit(e) {
@@ -177,16 +113,20 @@ async function handleFormSubmit(e) {
   const honeypotInput = document.getElementById('website');
   
   // ========== HONEYPOT CHECK (Anti-bot) ==========
-  if (honeypotInput.value.trim() !== '') {
+  if (honeypotInput?.value.trim() !== '') {
     console.warn('⚠️ Honeypot detectado - probable bot');
     showFormMessage('❌ Validación fallida. Intenta nuevamente.', 'error');
     return;
   }
   
   // ========== VALIDAR TODOS LOS CAMPOS ==========
-  const nameValid = validateField(nameInput, 'name');
-  const emailValid = validateField(emailInput, 'email');
-  const messageValid = validateField(messageInput, 'message');
+  const name = (nameInput?.value || '').trim();
+  const email = (emailInput?.value || '').trim();
+  const message = (messageInput?.value || '').trim();
+  
+  const nameValid = name.length >= 3;
+  const emailValid = ROBUST_EMAIL_REGEX.test(email);
+  const messageValid = message.length >= 5;
   
   if (!nameValid || !emailValid || !messageValid) {
     showFormMessage('⚠️ Por favor, completa todos los campos correctamente.', 'error');
@@ -202,11 +142,14 @@ async function handleFormSubmit(e) {
   
   try {
     const templateParams = {
-      name: nameInput.value.trim(),
-      email: emailInput.value.trim(),
-      message: messageInput.value.trim(),
+      name: name,
+      email: email,
+      subject: (document.getElementById('user_subject')?.value || '').trim() || 'Mensaje de contacto',
+      message: message,
       to_email: 'cvasquez7788@gmail.com'
     };
+    
+    console.log('Enviando:', templateParams);
     
     // ========== ENVIAR CON EMAILJS ==========
     const response = await emailjs.send(
@@ -219,7 +162,10 @@ async function handleFormSubmit(e) {
     showFormMessage('✅ ¡Mensaje enviado correctamente! Te responderemos pronto.', 'success');
     if (formStatus) formStatus.innerHTML = '<span class="status-success">✓ Mensaje enviado con éxito</span>';
     form.reset();
-    updateSubmitButton();
+    
+    // Reiniciar validación del formulario
+    const formValidationEvent = new Event('input');
+    nameInput?.dispatchEvent(formValidationEvent);
     
   } catch (error) {
     console.error('❌ Error al enviar:', error);
@@ -229,7 +175,7 @@ async function handleFormSubmit(e) {
     // ========== RESTAURAR BOTÓN DESPUÉS DE 3 SEGUNDOS ==========
     setTimeout(() => {
       submitBtn.textContent = originalText;
-      updateSubmitButton();
+      submitBtn.disabled = true;
       if (formStatus) formStatus.innerHTML = '';
     }, 3000);
   }
@@ -352,8 +298,17 @@ function initSmartStickyHeader() {
 
 // ========== INIT ON DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
-  // Inicializar EmailJS
-  emailjs.init('2yQjw2XUrKsFdc4V3');
+  // Inicializar EmailJS (con protección por si el script no cargó)
+  if (typeof emailjs !== 'undefined') {
+    try {
+      emailjs.init('2yQjw2XUrKsFdc4V3');
+      console.log('✅ EmailJS inicializado');
+    } catch (err) {
+      console.warn('⚠️ Error al inicializar EmailJS:', err);
+    }
+  } else {
+    console.warn('⚠️ EmailJS no está cargado. El envío de correos no funcionará, pero el formulario sí.');
+  }
   
   initThemeToggle();
   initFormValidation();
