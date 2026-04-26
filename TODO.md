@@ -1,10 +1,22 @@
-# TODO: Agregar logo al lado de "cristianaire" en la navegación
+# TODO: Corregir botón de horario de atención en móvil
 
-## Pasos del plan:
+## Estado: ✅ COMPLETADO
 
-- [x] **Paso 1**: Crear TODO.md ✅
-- [x] **Paso 2**: Editar index.html - Agregar <img> logo en .nav-brand ✅
-- [x] **Paso 3**: Editar styles.css - Actualizar .nav-brand a flex + estilos .nav-logo-img ✅
-- [ ] **Paso 4**: Verificar responsive y completar
+## Problema
+El bloque de "Horario de atención" dentro de `.contact-buttons-row` no se veía completo en teléfono porque la grilla usaba `repeat(4, 1fr)`, dándole solo el 25% del ancho a cada elemento.
 
-**Estado**: ✅ Completado - Eliminar este archivo si ya no es necesario
+## Cambios aplicados (styles.css)
+
+1. **En `@media (max-width: 768px)`:**
+   - `.contact-buttons-row` cambiado a `grid-template-columns: repeat(2, 1fr)`
+   - El horario de atención ahora ocupa 50% del ancho en lugar de 25%
+   - Ajustados paddings y tamaños de fuente específicamente para `.contact-buttons-row .contact-row`
+
+2. **En `@media (max-width: 480px)`:**
+   - `.contact-buttons-row` cambiado a `grid-template-columns: repeat(2, 1fr)`
+   - Ajustados paddings reducidos y tamaños de imagen/icono para pantallas muy pequeñas
+   - Corregida llave de cierre faltante que generaba error CSS
+
+## Archivo editado
+- `styles.css`
+
