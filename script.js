@@ -296,56 +296,6 @@ function initSmartStickyHeader() {
   }, false);
 }
 
-// ========== SELECTOR DE CATEGORÍA (PRODUCTOS) ==========
-function initCategorySelector() {
-  const buttons = document.querySelectorAll('.cat-btn');
-  if (!buttons.length) return;
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      document.querySelectorAll('.cat-panel').forEach(panel => {
-        panel.style.display = 'none';
-      });
-
-      const target = document.getElementById(btn.dataset.target);
-      if (target) target.style.display = '';
-    });
-  });
-}
-
-// ========== MENÚ HAMBURGUESA (PRODUCTOS) ==========
-function initProductsMenu() {
-  const toggle = document.getElementById('menu-toggle');
-  const dropdown = document.getElementById('menu-dropdown');
-  if (!toggle || !dropdown) return;
-
-  toggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isOpen = dropdown.classList.toggle('active');
-    toggle.classList.toggle('active', isOpen);
-    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-      dropdown.classList.remove('active');
-      toggle.classList.remove('active');
-      toggle.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      dropdown.classList.remove('active');
-      toggle.classList.remove('active');
-      toggle.setAttribute('aria-expanded', 'false');
-    }
-  });
-}
-
 // ========== INIT ON DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
   // Inicializar EmailJS (con protección por si el script no cargó)
@@ -363,6 +313,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initFormValidation();
   initSmartStickyHeader();
-  initProductsMenu();
-  initCategorySelector();
 });
