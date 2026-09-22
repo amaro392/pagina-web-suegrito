@@ -1,0 +1,280 @@
+diff -ruN a/index.html b/index.html
+--- a/index.html	2026-09-22 02:38:50.794627169 +0000
++++ b/index.html	2026-09-22 02:38:50.802159517 +0000
+@@ -62,7 +62,18 @@
+     <li><a href="#galeria">Galería</a></li>
+     <li><a href="#contacto">Contacto</a></li>
+   </ul>
+-  
++
++  <div class="menu-wrapper">
++    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
++      <span></span>
++      <span></span>
++      <span></span>
++    </button>
++    <div class="menu-dropdown" id="menu-dropdown">
++      <a href="productos.html" target="_blank" rel="noopener">Productos</a>
++    </div>
++  </div>
++
+ </nav>
+ 
+ 
+diff -ruN a/productos.html b/productos.html
+--- a/productos.html	1970-01-01 00:00:00.000000000 +0000
++++ b/productos.html	2026-09-22 02:38:50.802376565 +0000
+@@ -0,0 +1,104 @@
++<!DOCTYPE html>
++<html lang="es">
++<head>
++  <meta charset="UTF-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1.0">
++  <meta name="description" content="Equipo A/C y Compresores – Cristian Aire | Compresores, condensadores, evaporadores y repuestos de aire acondicionado para vehículos y maquinaria.">
++  <meta name="theme-color" content="#0ea5e9">
++  <title>Equipo A/C y Compresores | Cristian Aire</title>
++  <link rel="preconnect" href="https://fonts.googleapis.com">
++  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
++  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
++  <link rel="stylesheet" href="styles.css">
++  <link rel="icon" href="https://cristianaire.cl/assets/logo.png" type="image/png" sizes="192x192">
++  <link rel="apple-touch-icon" href="https://cristianaire.cl/assets/logo.png">
++</head>
++<body>
++
++<nav>
++  <div class="nav-brand">
++    <span class="nav-logo">cristianaire</span>
++  </div>
++  <ul class="nav-links">
++    <li><a href="index.html#inicio">Inicio</a></li>
++    <li><a href="index.html#nosotros">Nosotros</a></li>
++    <li><a href="index.html#clientes">Clientes</a></li>
++    <li><a href="index.html#equipos">Equipos</a></li>
++    <li><a href="index.html#servicios">Servicios</a></li>
++    <li><a href="index.html#galeria">Galería</a></li>
++    <li><a href="index.html#contacto">Contacto</a></li>
++  </ul>
++
++  <div class="menu-wrapper">
++    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
++      <span></span>
++      <span></span>
++      <span></span>
++    </button>
++    <div class="menu-dropdown" id="menu-dropdown">
++      <a href="index.html">Inicio</a>
++    </div>
++  </div>
++</nav>
++
++<section id="productos-hero" style="padding: 9rem 1.5rem 3rem; text-align: center;">
++  <p class="section-label">Nuestro catálogo</p>
++  <h2>Equipo A/C y <span>Compresores</span></h2>
++  <div class="divider"></div>
++  <p style="max-width: 700px; margin: 1rem auto 0; color: var(--text);">
++    Trabajamos con compresores, repuestos y equipos de climatización certificados para vehículos, flotas y maquinaria pesada.
++  </p>
++</section>
++
++<section id="productos-grid" style="padding: 1rem 1.5rem 4rem;">
++  <div class="equipos-grid">
++    <div class="nos-card">
++      <img src="assets/aire.jpg" alt="Compresores de aire acondicionado" loading="lazy" class="card-thumb">
++      <h3>Compresores</h3>
++      <p>Compresores nuevos y remanufacturados para automóviles, camiones y maquinaria.</p>
++    </div>
++    <div class="nos-card">
++      <img src="assets/aire2.jpg" alt="Condensadores y evaporadores de AC" loading="lazy" class="card-thumb">
++      <h3>Condensadores y evaporadores</h3>
++      <p>Repuestos originales y alternativos para todo tipo de sistemas de climatización.</p>
++    </div>
++    <div class="nos-card">
++      <img src="assets/diagnostico.jpg" alt="Gas refrigerante y kits de carga" loading="lazy" class="card-thumb">
++      <h3>Gas refrigerante</h3>
++      <p>R134a y R1234yf certificados, con kits de carga y manómetros de precisión.</p>
++    </div>
++    <div class="nos-card">
++      <img src="assets/maquinaria.jpg" alt="Mangueras, filtros y conexiones" loading="lazy" class="card-thumb">
++      <h3>Mangueras y filtros</h3>
++      <p>Mangueras, conexiones, filtros de cabina y secadores para todo tipo de flota.</p>
++    </div>
++  </div>
++</section>
++
++<section class="contact-buttons-section">
++  <div class="contact-buttons-row">
++    <a href="tel:+56956672657" class="contact-btn-icon" title="Llamar">
++      <img src="assets/telefono.jpg" alt="Icono teléfono" class="icon-btn-img">
++    </a>
++    <a href="https://wa.me/56956672657?text=Hola,%20quiero%20consultar%20por%20equipos%20y%20compresores%20de%20aire%20acondicionado" class="contact-btn-icon" target="_blank" rel="noopener" title="WhatsApp">
++      <img src="assets/whatsapp.jpg" alt="Icono WhatsApp" class="icon-btn-img">
++    </a>
++    <a href="https://facebook.com/search/top/?q=Cristian%20Andres%20Vasquez%20Vasquez" class="contact-btn-icon" target="_blank" rel="noopener" title="Facebook">
++      <img src="assets/facebook.jpg" alt="Icono Facebook" class="icon-btn-img">
++    </a>
++  </div>
++</section>
++
++<footer>
++  <div class="footer-logo">cristianaire<span>.</span>CL</div>
++  <p class="footer-copy">© 2026 cristianaire – Los Ángeles, Chile</p>
++  <div class="footer-links">
++    <a href="index.html#inicio">Inicio</a>
++    <a href="index.html#servicios">Servicios</a>
++    <a href="index.html#contacto">Contacto</a>
++  </div>
++</footer>
++
++<script src="script.js"></script>
++</body>
++</html>
+diff -ruN a/script.js b/script.js
+--- a/script.js	2026-09-22 02:38:50.794730397 +0000
++++ b/script.js	2026-09-22 02:38:50.802308709 +0000
+@@ -296,6 +296,36 @@
+   }, false);
+ }
+ 
++// ========== MENÚ HAMBURGUESA (PRODUCTOS) ==========
++function initProductsMenu() {
++  const toggle = document.getElementById('menu-toggle');
++  const dropdown = document.getElementById('menu-dropdown');
++  if (!toggle || !dropdown) return;
++
++  toggle.addEventListener('click', (e) => {
++    e.stopPropagation();
++    const isOpen = dropdown.classList.toggle('active');
++    toggle.classList.toggle('active', isOpen);
++    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
++  });
++
++  document.addEventListener('click', (e) => {
++    if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
++      dropdown.classList.remove('active');
++      toggle.classList.remove('active');
++      toggle.setAttribute('aria-expanded', 'false');
++    }
++  });
++
++  document.addEventListener('keydown', (e) => {
++    if (e.key === 'Escape') {
++      dropdown.classList.remove('active');
++      toggle.classList.remove('active');
++      toggle.setAttribute('aria-expanded', 'false');
++    }
++  });
++}
++
+ // ========== INIT ON DOM READY ==========
+ document.addEventListener('DOMContentLoaded', () => {
+   // Inicializar EmailJS (con protección por si el script no cargó)
+@@ -313,4 +343,5 @@
+   initThemeToggle();
+   initFormValidation();
+   initSmartStickyHeader();
++  initProductsMenu();
+ });
+diff -ruN a/styles.css b/styles.css
+--- a/styles.css	2026-09-22 02:38:50.794754827 +0000
++++ b/styles.css	2026-09-22 02:38:50.802340020 +0000
+@@ -103,6 +103,99 @@
+   font-weight: bold;
+ }
+ 
++/* ── MENÚ HAMBURGUESA (PRODUCTOS) ── */
++.menu-wrapper {
++  position: relative;
++  margin-left: auto;
++  flex-shrink: 0;
++}
++
++.menu-toggle {
++  display: flex;
++  flex-direction: column;
++  justify-content: center;
++  align-items: center;
++  gap: 5px;
++  width: 42px;
++  height: 42px;
++  border-radius: 50%;
++  border: 1px solid rgba(249, 115, 22, 0.3);
++  background: transparent;
++  cursor: pointer;
++  transition: background 0.25s ease, border-color 0.25s ease;
++}
++
++.menu-toggle:hover,
++.menu-toggle.active {
++  background: rgba(249, 115, 22, 0.12);
++  border-color: var(--accent);
++}
++
++.menu-toggle span {
++  display: block;
++  width: 18px;
++  height: 2px;
++  background: var(--dark);
++  border-radius: 2px;
++  transition: transform 0.25s ease, opacity 0.25s ease;
++}
++
++.menu-toggle.active span:nth-child(1) {
++  transform: translateY(7px) rotate(45deg);
++}
++.menu-toggle.active span:nth-child(2) {
++  opacity: 0;
++}
++.menu-toggle.active span:nth-child(3) {
++  transform: translateY(-7px) rotate(-45deg);
++}
++
++.menu-dropdown {
++  position: absolute;
++  top: calc(100% + 0.75rem);
++  right: 0;
++  min-width: 180px;
++  background: rgba(21, 35, 59, 0.98);
++  backdrop-filter: blur(20px);
++  border: 1px solid rgba(249, 115, 22, 0.15);
++  border-radius: 10px;
++  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
++  padding: 0.5rem;
++  opacity: 0;
++  visibility: hidden;
++  transform: translateY(-8px);
++  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
++  z-index: 200;
++}
++
++.menu-dropdown.active {
++  opacity: 1;
++  visibility: visible;
++  transform: translateY(0);
++}
++
++.menu-dropdown a {
++  display: block;
++  padding: 0.75rem 1rem;
++  color: var(--dark);
++  text-decoration: none;
++  font-weight: 600;
++  letter-spacing: 1px;
++  text-transform: uppercase;
++  font-size: 0.9rem;
++  border-radius: 6px;
++  transition: background 0.2s ease, color 0.2s ease;
++}
++
++.menu-dropdown a:hover {
++  background: rgba(249, 115, 22, 0.15);
++  color: var(--accent);
++}
++
++[data-theme="light"] .menu-dropdown {
++  background: rgba(26, 32, 44, 0.98);
++}
++
+ .nav-links { 
+   display: flex; 
+   gap: 1.8rem; 
