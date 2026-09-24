@@ -296,6 +296,41 @@ function initSmartStickyHeader() {
   }, false);
 }
 
+// ========== MENÚ HAMBURGUESA (PRODUCTOS) ==========
+function initMenuToggle() {
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuDropdown = document.getElementById('menu-dropdown');
+
+  if (!menuToggle || !menuDropdown) return;
+
+  function closeMenu() {
+    menuToggle.classList.remove('active');
+    menuDropdown.classList.remove('active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleMenu(e) {
+    e.stopPropagation();
+    const isActive = menuToggle.classList.toggle('active');
+    menuDropdown.classList.toggle('active', isActive);
+    menuToggle.setAttribute('aria-expanded', String(isActive));
+  }
+
+  menuToggle.addEventListener('click', toggleMenu);
+
+  // Cerrar al hacer click fuera del menú
+  document.addEventListener('click', (e) => {
+    if (!menuDropdown.contains(e.target) && !menuToggle.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Cerrar con la tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+}
+
 // ========== INIT ON DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
   // Inicializar EmailJS (con protección por si el script no cargó)
@@ -313,4 +348,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initFormValidation();
   initSmartStickyHeader();
+  initMenuToggle();
 });
